@@ -1,0 +1,85 @@
+const int buzzer = 5;
+int verdePedestre = 8;
+int vermelhoPedestre= 9;
+int verde =10;
+int amarelo =11;
+int vermelho =12;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(buzzer,OUTPUT);
+  pinMode(vermelhoPedestre,OUTPUT);
+  pinMode(verdePedestre, OUTPUT);
+  pinMode(verde, OUTPUT);
+  pinMode(vermelho, OUTPUT);
+  pinMode(amarelo, OUTPUT);
+  
+  digitalWrite(verde, HIGH);
+  digitalWrite(vermelhoPedestre, HIGH);
+  digitalWrite(vermelho, LOW);
+  digitalWrite(amarelo, LOW);
+  digitalWrite(verdePedestre, LOW);
+  }
+
+
+void loop() { 
+  int tempo =0;
+  int estadoverde=digitalRead(verde);
+  	while (tempo < 250){
+    	Serial.println("1");
+    	tempo++;
+  		}
+  digitalWrite(verde, LOW);
+  digitalWrite(amarelo, HIGH); 
+  delay(3000);
+  
+  digitalWrite(vermelho, HIGH);
+  digitalWrite(amarelo, LOW);
+  int estadovermelho=digitalRead(vermelho);
+   			
+  
+  while (estadovermelho == HIGH){
+  		Serial.println("2");	
+    	digitalWrite(vermelhoPedestre, LOW);
+    	delay(2000);
+        digitalWrite(verdePedestre, HIGH);
+            
+  		int estado = digitalRead(verdePedestre);
+  		int tempo2=0;
+  			while (estado == HIGH){              
+  		tone(buzzer,1500);   
+  		delay(1000);
+  		noTone(buzzer);
+  		delay(500);
+  		tempo2++;
+   	    Serial.println("3");
+  			while (tempo2 >5){
+  		Serial.println("4");
+  		digitalWrite(verdePedestre, LOW);
+  		estado = digitalRead(verdePedestre);
+  		delay(2000);
+  		estado = digitalRead(verdePedestre); 
+              for (int x=0; x<10; x++){
+              	digitalWrite(vermelhoPedestre,LOW);
+                delay(160);
+                tone(buzzer,500);   
+  				delay(160);
+                digitalWrite(vermelhoPedestre,HIGH);
+                delay(160);
+                noTone(buzzer);
+  				delay(160); 	
+              }
+        digitalWrite(vermelho, LOW);  
+        tempo=0;
+        tempo2=0;
+        digitalWrite(verde, HIGH);
+        estadovermelho=digitalRead(vermelho);
+            }
+        }
+    }
+}
+
+    
+  
+
+  
